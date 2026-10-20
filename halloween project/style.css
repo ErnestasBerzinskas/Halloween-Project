@@ -1,0 +1,414 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #171126;
+    font-family: Georgia, serif;
+    overflow-x: hidden;
+}
+
+.bookshelf {
+    position: relative;
+    width: 440px;
+    height: 360px;
+    flex-shrink: 0;
+}
+
+h1 {
+    position: absolute;
+    top: -100px;
+    width: 100%;
+    text-align: center;
+    color: #ff7518;
+    font-size: 28px;
+    text-shadow: 0 0 12px #ff4500;
+    letter-spacing: 2px;
+}
+
+.decorations span {
+    position: absolute;
+    font-size: 32px;
+}
+
+.ghost {
+    top: -10px;
+    left: 30px;
+}
+
+.bat {
+    top: 10px;
+    right: 35px;
+}
+
+.moon {
+    top: 55px;
+    right: 5px;
+}
+
+.books {
+    position: absolute;
+    bottom: 100px;
+    left: 30px;
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    z-index: 2;
+}
+
+.book {
+    position: relative;
+    width: 52px;
+    flex-shrink: 0;
+    border: 2px solid #30213e;
+    border-radius: 5px 5px 0 0;
+    box-shadow: inset 5px 0 rgba(255,255,255,.12);
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform .25s;
+}
+
+.book:hover {
+    filter: brightness(1.2);
+}
+
+.book span {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    color: #ffe6a7;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 10px 0;
+    text-shadow: 0 0 5px #ff7518;
+    pointer-events: none;
+    text-align: right;
+}
+
+.book1 {
+    height: 145px;
+    background: #6b214b;
+    transform: rotate(-5deg);
+}
+
+.book2 {
+    height: 155px;
+    background: #25233f;
+}
+
+.book3 {
+    height: 135px;
+    background: #d65a18;
+    transform: rotate(3deg);
+}
+
+.book4 {
+    height: 170px;
+    background: #36513b;
+}
+
+.book5 {
+    height: 120px;
+    background: #56318c;
+    transform: rotate(-3deg);
+}
+
+.book6 {
+    height: 145px;
+    background: #8b2929;
+}
+
+.book::after {
+    content: "";
+    position: absolute;
+    bottom: 15px;
+    left: 5px;
+    right: 5px;
+    height: 3px;
+    background: #e6b85c;
+    box-shadow: 0 -7px #e6b85c;
+    pointer-events: none;
+}
+
+.shelf {
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+    width: 100%;
+    height: 22px;
+    background: linear-gradient(#a85c32, #733719);
+    border-radius: 4px;
+    box-shadow:
+        0 8px 0 #47251d,
+        0 12px 18px rgba(0,0,0,.6);
+}
+
+.support {
+    position: absolute;
+    bottom: 15px;
+    width: 22px;
+    height: 65px;
+    background: #63351f;
+    border-radius: 0 0 4px 4px;
+    box-shadow: inset 4px 0 #874b2c;
+}
+
+.support.left {
+    left: 35px;
+}
+
+.support.right {
+    right: 35px;
+}
+
+.pumpkins {
+    position: absolute;
+    bottom: 18px;
+    left: 100px;
+    width: 240px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 30px;
+}
+
+.scare-button {
+    position: absolute;
+    background: transparent;
+    border: none;
+    padding: 4px;
+    font-size: 32px;
+    cursor: pointer;
+    z-index: 5;
+    transition: transform .2s, filter .2s;
+}
+
+.scare-button:hover {
+    transform: scale(1.35) rotate(-10deg);
+    filter: drop-shadow(0 0 10px red);
+}
+
+#book-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(9,5,20,.91);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+#book-overlay.active {
+    display: flex;
+    animation: fadeIn .35s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.open-book {
+    position: relative;
+    display: flex;
+    width: min(1100px, 94vw);
+    height: min(720px, 86vh);
+    border-radius: 12px;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,.7));
+    animation: bookAppear .65s cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes bookAppear {
+    from {
+        opacity: 0;
+        transform: translateY(100px) scale(.45);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.book-page {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    overflow-y: auto;
+    padding: clamp(18px, 4vw, 55px);
+    color: #35251d;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 29px,
+            rgba(100,70,40,.10) 30px,
+            transparent 31px
+        ),
+        #f3e2bd;
+    line-height: 1.8;
+}
+
+.book-page:first-child {
+    border-right: 2px solid #b59a6c;
+    border-radius: 12px 0 0 12px;
+}
+
+.book-page:last-child {
+    border-radius: 0 12px 12px 0;
+}
+
+.book-page h2 {
+    text-align: center;
+    color: #7a261f;
+    font-size: clamp(20px, 3vw, 32px);
+    margin: 0 0 25px;
+}
+
+.book-page p {
+    font-size: clamp(14px, 1.5vw, 19px);
+}
+
+.close-book {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+    border: none;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    background: #54213e;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.close-book:hover {
+    background: #a33333;
+}
+
+.mini-game {
+    margin-top: 25px;
+    padding: 20px;
+    border: 2px dashed #9b633a;
+    border-radius: 12px;
+    background: rgba(255,255,255,.35);
+    text-align: center;
+}
+
+.mini-game button {
+    margin: 5px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    background: #56318c;
+    color: white;
+    font-family: Georgia, serif;
+    cursor: pointer;
+}
+
+.mini-game button:hover {
+    background: #7a42b9;
+}
+
+.game-feedback {
+    font-weight: bold;
+    color: #7a261f;
+    min-height: 24px;
+}
+
+#scare-screen {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    color: white;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 9999;
+    cursor: pointer;
+}
+
+#scare-screen.active {
+    display: flex;
+    animation: red-flash .12s infinite alternate;
+}
+
+.scare-face {
+    font-size: clamp(120px,35vw,280px);
+    line-height: 1;
+    animation: face-zoom .45s ease-out;
+    filter: drop-shadow(0 0 25px red);
+}
+
+#scare-screen h2 {
+    font-family: Impact, sans-serif;
+    font-size: clamp(45px,10vw,90px);
+    color: red;
+    margin: 20px 0 5px;
+    text-shadow: 0 0 20px red;
+    animation: shake .08s infinite;
+}
+
+#scare-screen p {
+    font-size: clamp(14px,4vw,25px);
+    padding: 0 15px;
+}
+
+#scare-screen small {
+    color: #aaa;
+    margin-top: 25px;
+}
+
+@keyframes red-flash {
+    from { background: #000; }
+    to { background: #650000; }
+}
+
+@keyframes face-zoom {
+    from { transform: scale(.05); }
+    to { transform: scale(1); }
+}
+
+@keyframes shake {
+    0% { transform: translate(3px,-2px); }
+    50% { transform: translate(-3px,2px); }
+    100% { transform: translate(2px,1px); }
+}
+
+@media (max-width: 600px) {
+    .bookshelf {
+        transform: scale(.8);
+    }
+
+    h1 {
+        font-size: 23px;
+    }
+
+    .open-book {
+        width: 96vw;
+        height: 78vh;
+    }
+
+    .book-page {
+        padding: 14px;
+        line-height: 1.6;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms;
+        animation-iteration-count: 1;
+        scroll-behavior: auto;
+    }
+}
