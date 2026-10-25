@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Among the Monsters 🎃</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <h1>👻 Among the Monsters</h1>
+    <p class="subtitle">Can you survive the spooky quiz?</p>
+
+    <section id="start">
+      <h2>Enter the haunted ship...</h2>
+      <label for="playerName">Your name:</label>
+      <input id="playerName" type="text" placeholder="Enter your name">
+      <button id="startBtn">🎃 Start the Game</button>
+      <p id="status" aria-live="polite">Ready to play?</p>
+    </section>
+
+    <section id="game" hidden>
+      <div class="stats">
+        <span>👤 <span id="player">Player</span></span>
+        <span>⭐ Score: <span id="score">0</span></span>
+        <span>Question <span id="number">1</span>/5</span>
+      </div>
+
+      <div class="progress"><div id="bar"></div></div>
+      <h2 id="question">Loading question...</h2>
+      <div id="answers" class="answers"></div>
+      <p id="feedback" aria-live="polite"></p>
+      <button id="nextBtn" hidden>Next Question ➡️</button>
+    </section>
+
+    <section id="bonus" hidden>
+      <h2>🎁 BONUS ROUND!</h2>
+      <p>Do you dare to answer one last question?</p>
+      <p>Is a vampire a mythical creature?</p>
+      <div class="answers">
+        <button class="bonusAnswer" data-answer="yes">Yes 🧛</button>
+        <button class="bonusAnswer" data-answer="no">No 👀</button>
+      </div>
+      <p id="bonusFeedback" aria-live="polite"></p>
+      <button id="finishBtn" hidden>See My Results 🏆</button>
+    </section>
+
+    <section id="result" hidden>
+      <h2>🏆 The Haunted Quiz Is Over!</h2>
+      <p id="resultText"></p>
+      <p>Your final score:</p>
+      <h2 id="finalScore">0</h2>
+      <button id="againBtn">🔄 Play Again</button>
+    </section>
+
+    <p class="footer">⚠️ Beware of monsters... and tricky questions!</p>
+  </div>
+
+  <button id="scareBtn" hidden aria-label="Open spooky surprise">👀</button>
+
+  <div id="scarePopup" hidden>
+    <div class="scare-card">
+      <div id="scareEmoji">👹</div>
+      <h2>YOU'VE BEEN SPOOKED!</h2>
+      <p>A monster was hiding nearby... 🎃</p>
+      <button id="closeScare">AHH! Close 😱</button>
+    </div>
+  </div>
+</body>
+</html>
